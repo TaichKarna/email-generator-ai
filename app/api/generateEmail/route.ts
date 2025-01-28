@@ -55,7 +55,7 @@ export async function POST(request: Request): Promise<Response> {
 
     const res = await model.invoke(input[0]);
 
-    let emailContent = res.content?.trim();
+    const emailContent = res.content;
 
     if (!emailContent) {
       return NextResponse.json(
@@ -63,10 +63,6 @@ export async function POST(request: Request): Promise<Response> {
         { status: 500 }
       );
     }
-
-    emailContent = emailContent
-      .replace(/\[Your Name\/Company Name\]/g, 'Your Name')
-      .replace(/\n{2,}/g, '\n\n');
 
     return NextResponse.json({ email: emailContent });
   } catch (error) {
